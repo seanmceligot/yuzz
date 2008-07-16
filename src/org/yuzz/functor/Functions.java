@@ -1,0 +1,98 @@
+package org.yuzz.functor;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.yuzz.functor.Function.Fun1;
+import org.yuzz.functor.Function.Fun2;
+import org.yuzz.functor.Procedure.Proc1;
+import org.yuzz.functor.Tuples.Tuple2;
+
+
+
+public class Functions {
+	public static <A,B> List<Tuple2<A,B>> zip(List<A> list1, List<B> list2) {
+		ArrayList zip = new ArrayList(list1.size());
+		int min = Math.min(list1.size(), list2.size());
+		for(int i = 0; i < min; i++) {
+			zip.add(new Tuple2<A,B>(list1.get(i), list2.get(i)));
+		}
+		return zip;
+	}
+	public static List<String> sequenceString(int start, int end) {
+		return map(Operators.mkToString(), sequence(start, end));
+	}
+	public static List<Integer> sequence(int end) {
+		return sequence(0, end-1);
+	}
+	public static List<Integer> sequence(int start, int end) {
+		assert( !(start>end) );
+		List<Integer> sa = new ArrayList<Integer>(end-start);
+		int current = start;
+		while(current <= end) {
+			sa.add(current);
+			current = current+1;
+		}
+		return sa;
+	}
+	public static <T> List<T> tail(List<T> l) {
+		return l.subList(1, l.size());
+	}
+	public static <T> T head(List<T> l) {
+		return l.get(0);
+	}
+	public static <T> T head(T[] a) {
+		return a[0];
+	}
+	
+	public static <I,R> List<R> map(Fun1<R,I> fun, List<I> list) {
+		return map(fun, list, new LinkedList<R>());
+	}
+	/**
+	 * @see http://en.wikipedia.org/wiki/Map_%28higher-order_function%29
+	 * @see http://en.wikipedia.org/wiki/Tail_recursion
+	 */ 
+	public static <I,R> List<R> map(Fun1<R,I> fun, List<I> list, List<R> out) {
+		if (list.size() == 0) {
+			return out;
+		}
+		out.add(fun.apply(head(list)));
+		return map(fun, tail(list), out);
+	}
+		/**
+	 * http://en.wikipedia.org/wiki/Fold_(higher-order_function)
+	 * @param fun
+	 * @param item
+	 * @param list
+	 * @param <I>
+	 * @return
+	 */
+	public static <I> I reduce(Fun2<I, I, I> fun, I item, List<I> list) {
+		if (list.size() == 0) {
+			return item;
+		}
+		return reduce(fun, fun.apply(item, Functions.head(list)), Functions.tail(list));
+	}
+
+	public static <I> I reduce(Fun2<I, I, I> fun, List<I> list) {
+		return reduce(fun, head(list), tail(list));
+		
+	}
+	public static <T> void each(Proc1<T> proc, List<T> list) {
+		for (T item : list) {
+			proc.call(item);
+		}
+		
+	}
+	/*
+	// http://en.wikipedia.org/wiki/Map_%28higher-order_function%29
+	public static <I,R> List<R> map(Fun1<R,I> fun, List<I> list) {
+		List<R> mapped = new ArrayList<R>(list.size());
+		for (I item : list) {
+			mapped.add(fun.apply(item));
+		}
+		return mapped;
+	}*/
+}
