@@ -1,0 +1,78 @@
+package org.yuzz.xhtml;
+
+
+public class Strict {
+	public static HtmlString str(String s) {
+		return new HtmlString(s);
+	}
+	/*private static Html tag(String tag, IHtmlAttr atts, HtmlElement... els) {
+		return new Html(new HtmlTag(tag,atts,els));
+	}
+	private static Html tag(String tag, IHtmlAttr[] atts) {
+		return new Html(new HtmlTag(tag,atts,Html.EMPTY));
+	}*/
+	public static IHtmlAttr strAttr(String n, String v) {
+		return new HtmlAttr(n,v);
+	}
+	public static IHtmlAttr[] aa(IHtmlAttr... atts) {
+		return atts;
+	}
+	public static Html hh(HtmlElement... els) {
+		return new Html(els);
+	}
+	interface InTable extends HtmlElement {}
+	interface ContentOf_tr extends HtmlElement  {}
+	interface ContentOf_table extends HtmlElement  {}
+	interface ContentOf_head extends HtmlElement  {}
+	interface ContentOf_body extends HtmlElement  {
+		}
+	
+	
+	class Body extends HtmlTag implements ContentOf_html {
+		Body(IHtmlAttr[] as, ContentOf_body... cs) {
+			super("body", as, cs);
+	}}
+	private static final AttributeOf_body[] ATTRIBUTE_OF_body = new AttributeOf_body[0];
+
+	class Head extends HtmlTag implements ContentOf_html {
+		Head(IHtmlAttr[] as, ContentOf_head... cs) {
+			super("head", as, cs);
+	}}
+
+	// html
+	interface ContentOf_html extends HtmlElement  {}
+	public static Element_html html(ContentOf_html... els) {return new Element_html(ATTRIBUTE_OF_html, els);}
+	public static Element_html html(AttributeOf_html[] atts, ContentOf_html... els) {return new Element_html(atts, els);}
+	private static final AttributeOf_html[] ATTRIBUTE_OF_html = new AttributeOf_html[0];
+	interface AttributeOf_html extends IHtmlAttr  {}
+	public static class Element_html extends HtmlTag  {
+		Element_html(AttributeOf_html[] as, ContentOf_html...cs) {
+			super("html", as, cs);
+	}}
+	
+	
+	interface AttributeOf_body<V> extends IHtmlAttr<V>  {
+	//public static final AttributeOf_body[] EMPTY = {};
+	}
+	interface AttributeOf_head<V> extends IHtmlAttr<V>  {
+		//public static final AttributeOf_body[] EMPTY = {};
+	}
+
+	public static class Element_body  extends HtmlTag implements ContentOf_html {
+		Element_body(AttributeOf_body[] as, ContentOf_body...cs) {
+			super("body", as, cs);
+	}}
+
+	public static Element_body body(AttributeOf_body[] atts, ContentOf_body... els) {return new Element_body( atts, els);}
+	public static Element_body body(ContentOf_body... els) {return tag("body", ATTRIBUTE_OF_body, els);}
+	public static Element_head head(AttributeOf_head[] atts, ContentOf_head... els) {return tag("head", atts, els);}
+	public static Element_head head(ContentOf_head... els) {return tag("head", new AttributeOf_head[0], els);}
+	/*public static Html br(IHtmlAttr[] atts) {return tag("br", atts);}
+	public static Html table(IHtmlAttr[] atts, ContentOf_table els) {return tag("table", atts, hh(els));}
+	public static Html tbody(IHtmlAttr[] atts, Html els) {return tag("tbody", atts, els);}
+	public static Html td(IHtmlAttr[] atts, Html els) {return tag("td", atts, els);}
+	public static Html th(IHtmlAttr[] atts, Html els) {return tag("th", atts, els);}
+	public static Html thead(IHtmlAttr[] atts, Html els) {return tag("thead", atts, els);}
+	public static Html tr(IHtmlAttr[] atts, Html els) {return tag("tr", atts, els);}
+	*/
+}
