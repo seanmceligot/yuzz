@@ -3,13 +3,14 @@ import static org.yuzz.xml.NodeStatics.a;
 import static org.yuzz.xml.NodeStatics.div;
 import static org.yuzz.xml.NodeStatics.n;
 import static org.yuzz.xml.NodeStatics.t;
-import org.snuvy.DbTable;
-import org.snuvy.Schema;
 
+import java.util.Arrays;
 import java.util.List;
 
+import org.snuvy.DbTable;
+import org.snuvy.Schema;
+import org.yuzz.functor.Functions;
 import org.yuzz.xml.Node;
-import org.yuzz.xml.NodeFunctions;
 import org.yuzz.xml.NodeOperators;
 import org.yuzz.xml.NodeStatics;
 import org.yuzz.xml.Xhtml.Table;
@@ -24,7 +25,7 @@ public class ListView implements Noder {
 	
 	}
 
-	@Override
+	//@Override
 	public Node node() throws Throwable {
 		final Table htmlTable = NodeStatics.table();
 		Schema schema = _dbTable.getSchema();
@@ -33,8 +34,7 @@ public class ListView implements Noder {
 		htmlTable.add(rowToTr.header());
 		List<Tr> results = _dbTable.map(rowToTr, schema.getPk());
 		// add the results into the html table byHostTable
-		NodeFunctions.reduce(new NodeOperators.AddNodes<Table,Tr>(), htmlTable, results);
-		
+		//Functions.reduce(new NodeOperators.AddNodes<Tr, Table>(), htmlTable, Arrays.asList(results));
 		return div(a("class","dblist"),
 						n("h3", t(_dbTable.getSchema().getName())), 
 						htmlTable);

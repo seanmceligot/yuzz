@@ -2,7 +2,7 @@ package org.yuzz.web;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import org.yuzz.functor.Function.Fun1;
+import org.yuzz.functor.Fun.F;
 import org.yuzz.functor.Procedure.Proc2;
 
 public class MapReduce {
@@ -25,11 +25,11 @@ public class MapReduce {
 			return reducer.reduce(list);
 		}*/
 	}
-	public static <In, Out> void transform(BlockingQueue<In> in, BlockingQueue<Out> out, Fun1<Out, In> fun) {
+	public static <In, Out> void transform(BlockingQueue<In> in, BlockingQueue<Out> out, F<In, Out> fun) {
 		while(!in.isEmpty()) {
 			try {
 				In item = in.take();
-				Out result = fun.apply(item);
+				Out result = fun.f(item);
 				out.offer(result);
 			} catch (InterruptedException e) {
 			}
@@ -39,7 +39,7 @@ public class MapReduce {
 		while(!in.isEmpty()) {
 			try {
 				In item = in.take();
-				proc.call(c, item);
+				proc.f(c, item);
 			} catch (InterruptedException e) {
 			}
 		}
@@ -57,7 +57,7 @@ public class MapReduce {
 		return mapper.map(t);
 	}*/
 	/*
-	public static final class Adder<Input, Child> extends Fun2<Input, Input, Child> {
+	public static final class Adder<Input, Child> extends F2<Input, Input, Child> {
 	}*/
 
 

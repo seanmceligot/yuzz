@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
 import org.yuzz.functor.Tuples;
-import org.yuzz.functor.Function.Fun1;
+import org.yuzz.functor.Fun.F;
 
 import com.sleepycat.je.Cursor;
 import com.sleepycat.je.Database;
@@ -142,7 +142,7 @@ public class DbTable {
   public DbIndex byPk() {
     return new DbIndex(Schema.ROWID, ColType.LONG); 
   }
-  public <OneRow> void queue(Fun1<OneRow, DbRow> rowToTuple,DbIndex index, BlockingQueue<OneRow> q) throws DatabaseException {
+  public <OneRow> void queue(F<DbRow, OneRow> rowToTuple,DbIndex index, BlockingQueue<OneRow> q) throws DatabaseException {
 	    Cursor cursor = createCursor(index.getName());
 	    DatabaseColumn key = new DatabaseColumn();
 	    try {
@@ -151,7 +151,7 @@ public class DbTable {
 	    	cursor.close();
 	    }
 	}
-	private static <OneRow> void queue(Fun1<OneRow, DbRow> fun, Tuples.Tuple3<DbTable, Cursor, DatabaseColumn> tuple,
+	private static <OneRow> void queue(F<DbRow, OneRow> fun, Tuples.Tuple3<DbTable, Cursor, DatabaseColumn> tuple,
 			BlockingQueue<OneRow> rows) throws DatabaseException {
 
 		DbTable table = tuple._1();
@@ -164,12 +164,12 @@ public class DbTable {
 	    	return;
 	    } 
 	     DbRow row = table.getRow(val);
-	     rows.offer(fun.apply(row));
+	     rows.offer(fun.f(row));
 		
 		queue(fun, tuple, rows);
 	}
 
-  public <OneRow> List<OneRow> map(Fun1<OneRow, DbRow> rowToTuple,DbIndex index) throws DatabaseException {
+  public <OneRow> List<OneRow> map(F<DbRow, OneRow> rowToTuple,DbIndex index) throws DatabaseException {
 	    Cursor cursor = createCursor(index.getName());
 	    DatabaseColumn key = new DatabaseColumn();
 	    try {
@@ -179,7 +179,7 @@ public class DbTable {
 	    }
 	}
 
-	private static <OneRow> List<OneRow> map(Fun1<OneRow, DbRow> fun, Tuples.Tuple3<DbTable, Cursor, DatabaseColumn> tuple,
+	private static <OneRow> List<OneRow> map(F<DbRow, OneRow> fun, Tuples.Tuple3<DbTable, Cursor, DatabaseColumn> tuple,
 			LinkedList<OneRow> rows) throws DatabaseException {
 
 		DbTable table = tuple._1();
@@ -192,7 +192,7 @@ public class DbTable {
 	    	return rows;
 	    } 
 	     DbRow row = table.getRow(val);
-	     rows.add(fun.apply(row));
+	     rows.add(fun.f(row));
 		
 		return map(fun, tuple, rows);
 	}

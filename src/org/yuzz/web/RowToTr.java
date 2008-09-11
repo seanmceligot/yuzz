@@ -1,19 +1,18 @@
 package org.yuzz.web;
 import static org.yuzz.xml.NodeStatics.a;
-import static org.yuzz.xml.NodeStatics.n;
 import static org.yuzz.xml.NodeStatics.t;
 import static org.yuzz.xml.NodeStatics.td;
 import static org.yuzz.xml.NodeStatics.th;
 import static org.yuzz.xml.NodeStatics.tr;
-import org.snuvy.DbRow;
-import org.snuvy.Schema;
 
 import java.util.Iterator;
 
+import org.snuvy.DbRow;
+import org.snuvy.Schema;
+import org.yuzz.functor.Fun.F;
 import org.yuzz.xml.Xhtml.Tr;
-import org.yuzz.functor.Function.Fun1;
 
-public class RowToTr extends Fun1<Tr, DbRow> {
+public class RowToTr extends F<DbRow, Tr> {
 	private final Schema _schema;
 
 	public RowToTr(Schema schema) {
@@ -21,7 +20,7 @@ public class RowToTr extends Fun1<Tr, DbRow> {
 	}
 
 	@Override
-	public Tr apply(DbRow row) {
+	public Tr f(DbRow row) {
 		 //long rowId = row.getRowId();
 		 Tr tr = tr(a("class", "dbrow"));
 		 Iterator<String> colnames = _schema.getColumnNames();

@@ -1,24 +1,41 @@
 package org.yuzz.xml;
 import static org.yuzz.xml.NodeStatics.n;
+import static org.yuzz.xml.NodeStatics.t;
+import static org.yuzz.xml.NodeStatics.td;
+import static org.yuzz.xml.NodeStatics.tr;
 
+import org.yuzz.functor.Fun;
 import org.yuzz.functor.TreeNode;
-import org.yuzz.functor.Function.Fun1;
-import org.yuzz.functor.Function.Fun2;
+import org.yuzz.functor.Fun.F;
+import org.yuzz.functor.Fun.F2;
 import org.yuzz.functor.Predicate.Pred1;
 import org.yuzz.functor.Procedure.Proc2;
+import org.yuzz.xml.Xhtml.Table;
+import org.yuzz.xml.Xhtml.Tr;
 
 public class NodeOperators {
+  public static final class StringGridToTable extends
+      Fun.F2<Table, String[], Table> {
+    public Table f(Table table, String[] row) {
+      Tr tr = tr();
+      for (String cell : row) {
+        tr.add(td(t(cell)));
+      }
+      table.add(tr);
+      return table;
+    }
+  }
 
-	public static final class AddNodes<Root extends Node, Child extends Node> extends Fun2<Root, Root, Child> {
+	public static final class AddNodes<Root extends Node, Child extends Node> extends F2<Child, Root, Root> {
 		@Override
-		public Root apply(Root root, Child child) {
+		public Root f(Child child, Root root) {
 			root.add(child);
 			return root;
 		}
 	}
 	public static final class AddNodesProc<Root extends Node, Child extends Node> extends Proc2<Root, Child> {
 		@Override
-		public void call(Root root, Child child) {
+		public void f(Root root, Child child) {
 			root.add(child);
 		}
 	}
@@ -47,9 +64,9 @@ public class NodeOperators {
 			return _tagName.equalsIgnoreCase(n.getTag());
 		}
 	}
-	public static class MkNode extends Fun1<Node,String> {
+	public static class MkNode extends F<String,Node> {
 		@Override
-		public Node apply(String tag) {
+		public Node f(String tag) {
 			return n(tag);
 		}
 	}

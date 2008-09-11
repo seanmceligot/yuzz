@@ -1,6 +1,7 @@
 package org.snuvy;
 
 
+import java.util.Date;
 import java.util.TreeMap;
 
 public class DbRow {
@@ -61,6 +62,15 @@ public class DbRow {
 	public float getFloat(String key) {
 		return getEntry(key).getFloat();
 	}
+	public DatabaseColumn setDateTime(String key, Date value) {
+		assert(_schema.getType(key) == ColType.DATETIME);
+		DatabaseColumn entry = getNonNullEntry(key);
+		entry.setDateTime(value);
+		return entry;
+	}
+	public Date getDateTime(String key) {
+		return getEntry(key).getDateTime();
+	}
   public Money getMoney(String key) {
     return getEntry(key).getMoney();
   }
@@ -84,6 +94,8 @@ public class DbRow {
 			case LONG_COLUMN:
 			case AUTOLONG:
 				return Long.toString(getLong(name));
+			case DATETIME_COLUMN:
+				return getDateTime(name).toString();
 			case STRING_COLUMN:
 				return getString(name);
 			case FLOAT_COLUMN:

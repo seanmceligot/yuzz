@@ -25,21 +25,21 @@ public class EnumerationOperations {
 		}
 		return list;
 	}
-	public static void forEach(Enumeration en, Procedure.Proc0 procedure) {
+	public static <T> void forEach(Enumeration<T> en, Procedure.Proc0 procedure) {
 		while(en.hasMoreElements()) {
-			procedure.call();
+			procedure.f();
 		}
 	}
 	public static <T> void forEach(Enumeration<T> en, Procedure.Proc1<T> procedure) {
 		while(en.hasMoreElements()) {
 			T obj = en.nextElement();
-			procedure.call(obj);
+			procedure.f(obj);
 		}
 	}
 	public static <ET,PT> void forEach(Enumeration<ET> en, PT parameter, Procedure.Proc2<ET,PT> procedure) {
 		while(en.hasMoreElements()) {
 			ET obj = en.nextElement();
-			procedure.call(obj, parameter);
+			procedure.f(obj, parameter);
 		}
 	}
 }

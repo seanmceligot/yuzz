@@ -1,10 +1,11 @@
 package org.yuzz.xml;
 import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -13,19 +14,17 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
-import org.yuzz.functor.TreeNode;
-import org.yuzz.functor.Function.Fun1;
-
 import org.apache.commons.lang.StringEscapeUtils;
+import org.yuzz.functor.TreeNode;
+import org.yuzz.functor.Fun.F;
 /*
 public class Node extends Node<Node> {
 	
 }
 */
-public class Node<ChildNode extends Node> extends Fun1<Node,ChildNode> implements TreeNode<ChildNode> {
+public class Node<ChildNode extends Node> extends F<ChildNode, Node> implements TreeNode<ChildNode> {
 	public static final Node[] EMPTY_LIST = new Node[0];
 	 
-	
 	protected final LinkedList<ChildNode> _childElements;
 	protected final TreeMap<String,String> _attributes;
 	private boolean _allowEmptyTags = true;
@@ -226,9 +225,13 @@ public class Node<ChildNode extends Node> extends Fun1<Node,ChildNode> implement
 			super("", Attribute.EMPTY_LIST, NoChildren.EMPTY_LIST);
 			_text = text==null?"":StringEscapeUtils.escapeXml(text);
 		}
-		public static Fun1<Text,String> mkText() {
-			return new Fun1<Text,String>() {
-				public Text apply(String text) {
+		/**
+		 * Takes a String and returns a Text
+		 * @return
+		 */
+		public static F<String, Text> mkText() {
+			return new F<String,Text>() {
+				public Text f(String text) {
 					return new Text(text);
 				}
 			};
@@ -287,23 +290,66 @@ public class Node<ChildNode extends Node> extends Fun1<Node,ChildNode> implement
 		return _childElements.remove(arg0);
 	}
 	@Override
-	public Node apply(ChildNode a) {
+	public Node f(ChildNode a) {
 		add(a);
 		return this;
 	}
-	public Fun1<Node,Node> mkNode() {
-		return new Fun1<Node,Node>() {
-			public Node apply(Node a) {
+	public F<Node,Node> mkNode() {
+		return new F<Node,Node>() {
+			public Node f(Node a) {
 				return new Node(_tag, new Node[]{a});
 			}
 		};
 	};
-	public Fun1<Node,Node[]> mkNodeA() {
-		return new Fun1<Node,Node[]>() {
-			public Node apply(Node[] a) {
+	public F<Node[],Node> mkNodeA() {
+		return new F<Node[],Node>() {
+			public Node f(Node[] a) {
 				return new Node(_tag, a);
 			}
 		};
+	}
+	public static Node readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+		String tag = (String)in.readObject();
+		boolean allowEmptyTags = in.readBoolean();
+		Attribute[] atts;
+		{
+			int c = in.readInt();
+			atts = new Attribute[c];
+			for(int i = 0; i < c; i++ ) {
+				String key = (String)in.readObject();
+				String value = (String)in.readObject();
+				atts[i] = new Attribute(key, value);
+			}
+		}
+		
+		Node n;
+		//if (tag.length() > 0) {
+			n = new Node(tag, atts);
+		//} else {
+		//	n = new Text()
+		//}
+		n._allowEmptyTags = allowEmptyTags; 
+		{
+			int c = in.readInt();
+			for (int i = 0; i < c; i++) {
+				Node child = Node.readExternal(in);
+				n.add(child);
+			}
+		}
+		return n;
+	}
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeObject(_tag);
+		out.writeBoolean(_allowEmptyTags);
+		out.writeInt(_attributes.size());
+		for (Entry<String, String> at : _attributes.entrySet()) {
+			out.writeObject(at.getKey());
+			out.writeObject(at.getValue());
+		}
+		out.writeInt(_childElements.size());
+		for (ChildNode child : _childElements) {
+			child.writeExternal(out);
+		}
 	};
 	
 }

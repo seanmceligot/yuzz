@@ -9,6 +9,7 @@ public class ColType {
 	LONG_COLUMN,
 	STRING_COLUMN,
 	FLOAT_COLUMN,
+	DATETIME_COLUMN,
   LMONEY,
   AUTOLONG
   }
@@ -16,6 +17,7 @@ public class ColType {
 	public static final ColType LONG = new ColType(TYPE.LONG_COLUMN);
 	public static final ColType STRING = new ColType(TYPE.STRING_COLUMN);
 	public static final ColType FLOAT = new ColType(TYPE.FLOAT_COLUMN);
+	public static final ColType DATETIME = new ColType(TYPE.DATETIME_COLUMN);
   public static final ColType LMONEY = new ColType(TYPE.LMONEY);
   public static final ColType AUTOLONG = new ColType(TYPE.AUTOLONG);
 	private TYPE _type;

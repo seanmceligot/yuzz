@@ -51,21 +51,21 @@ public final class TreeOperations {
 		return list;
 	}
 	public static void forEach(TreeNode node, Procedure.Proc0 procedure) {
-		procedure.call();
+		procedure.f();
 		List<TreeNode> it = node.getChildren();
 		for (TreeNode next : it) {
 			forEach(next, procedure);
 		}
 	}
 	public static void forEach(TreeNode node, Procedure.Proc1 <TreeNode> procedure) {
-		procedure.call(node);
+		procedure.f(node);
 		List<TreeNode> it = node.getChildren();
 		for (TreeNode next : it) {
 			forEach(next, procedure);
 		}
 	}
 	public static <T> void forEach (TreeNode node, T parameter, Procedure.Proc2<TreeNode,T> procedure) {
-		procedure.call(node, parameter);
+		procedure.f(node, parameter);
 		List<TreeNode> it = node.getChildren();
 		for (TreeNode next : it) {
 			forEach(next, parameter, procedure);
@@ -75,7 +75,7 @@ public final class TreeOperations {
 		forEach(node, fn, 0);
 	}
 	private static void forEach(TreeNode node, Procedure.Proc2<TreeNode,Integer> fn, int depth) {
-		fn.call(node, depth);
+		fn.f(node, depth);
 		depth++;
 		List<TreeNode> it = node.getChildren();
 		for (TreeNode next : it) {

@@ -7,6 +7,7 @@ import java.sql.Array;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
+//import java.sql.NClob;
 import java.sql.NClob;
 import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
@@ -14,9 +15,11 @@ import java.sql.Ref;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.RowId;
+import java.sql.SQLXML;
+//import java.sql.RowId;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
-import java.sql.SQLXML;
+//import java.sql.SQLXML;
 import java.sql.Statement;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
@@ -1266,54 +1269,31 @@ public class DebugPreparedStatement implements PreparedStatement {
 	}
 	public void setNCharacterStream(int parameterIndex, Reader value,
 			long length) throws SQLException {
-		// TODO Auto-generated method stub
-		
 	}
-	public void setNClob(int parameterIndex, NClob value) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-	public void setNClob(int parameterIndex, Reader reader) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-	public void setNClob(int parameterIndex, Reader reader, long length)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-	public void setNString(int parameterIndex, String value)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-	public void setRowId(int parameterIndex, RowId x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-	public void setSQLXML(int parameterIndex, SQLXML xmlObject)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-	public boolean isClosed() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	public boolean isPoolable() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	public void setPoolable(boolean poolable) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-	public boolean isWrapperFor(Class<?> iface) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	public <T> T unwrap(Class<T> iface) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+  public void setNClob(int arg0, NClob arg1) throws SQLException {
+  }
+  public void setNClob(int arg0, Reader arg1) throws SQLException {
+  }
+  public void setNClob(int arg0, Reader arg1, long arg2) throws SQLException {
+  }
+  public void setNString(int arg0, String arg1) throws SQLException {
+  }
+  public void setRowId(int arg0, RowId arg1) throws SQLException {
+  }
+  public void setSQLXML(int arg0, SQLXML arg1) throws SQLException {
+  }
+  public boolean isClosed() throws SQLException {
+    return false;
+  }
+  public boolean isPoolable() throws SQLException {
+    return false;
+  }
+  public void setPoolable(boolean arg0) throws SQLException {
+  }
+  public boolean isWrapperFor(Class<?> arg0) throws SQLException {
+    return false;
+  }
+  public <T> T unwrap(Class<T> arg0) throws SQLException {
+    return null;
+  }
 }

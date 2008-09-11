@@ -1,5 +1,7 @@
 package org.snuvy;
 
+import java.util.Date;
+
 import com.sleepycat.bind.tuple.DoubleBinding;
 import com.sleepycat.bind.tuple.FloatBinding;
 import com.sleepycat.bind.tuple.IntegerBinding;
@@ -36,6 +38,10 @@ public final class DatabaseColumn {
   public void setString(String value) {
     StringBinding.stringToEntry(value, _entry);
   }
+  public void setDateTime(Date value) {
+	  LongBinding.longToEntry(value.getTime(), _entry);
+  }
+
   public void setMoney(Money value) {
     DoubleBinding.doubleToEntry(value.bd$().doubleValue(), _entry);
   }
@@ -50,6 +56,9 @@ public final class DatabaseColumn {
 	}
 	public long getLong() {
 		return LongBinding.entryToLong(_entry);
+	}
+	public Date getDateTime() {
+		return new Date(LongBinding.entryToLong(_entry));
 	}
 	public String getString() {
 		return StringBinding.entryToString(_entry);
