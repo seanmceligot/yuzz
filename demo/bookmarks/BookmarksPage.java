@@ -75,8 +75,6 @@ public class BookmarksPage implements Page {
 
 	}
 
-
-	@Override
 	public HtmlTag process(HttpServletRequest req, HttpServletResponse res) throws Throwable {
 	  	Dbm dbm = new Dbm();
 	  	dbm.open();

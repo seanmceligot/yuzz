@@ -1,14 +1,19 @@
 package bookmarks;
 
-import org.snuvy.DbRow;
-import static org.yuzz.xml.NodeStatics.*;
-import static org.yuzz.xml.Xhtml.*;
-import static org.yuzz.functor.Function.*;
+import static org.yuzz.xml.NodeStatics.a;
+import static org.yuzz.xml.NodeStatics.n;
+import static org.yuzz.xml.NodeStatics.t;
+import static org.yuzz.xml.NodeStatics.td;
+import static org.yuzz.xml.NodeStatics.tr;
 
-public class BookmarkRowToTr extends Fun1<Tr, DbRow> {
-	public class RowToTr extends Fun1<Tr, DbRow> {
+import org.snuvy.DbRow;
+import org.yuzz.functor.Fun.F;
+import org.yuzz.xml.Xhtml.Tr;
+
+public class BookmarkRowToTr extends F<DbRow, Tr> {
+	public class RowToTr extends F<DbRow, Tr> {
 		@Override
-		public Tr apply(DbRow row) {
+		public Tr f(DbRow row) {
 			 long rowId = row.getRowId();
 		      String name = row.getString(BookmarkManager.NAME);
 		      String url = row.getString(BookmarkManager.URL);
@@ -20,7 +25,7 @@ public class BookmarkRowToTr extends Fun1<Tr, DbRow> {
 	}
 
 	@Override
-	public Tr apply(DbRow row) {
+	public Tr f(DbRow row) {
 		 long rowId = row.getRowId();
 	      String name = row.getString(BookmarkManager.NAME);
 	      String url = row.getString(BookmarkManager.URL);

@@ -1,25 +1,24 @@
 package bookmarks;
 
-import org.snuvy.DbRow;
-import org.snuvy.DbTable;
-import org.snuvy.Dbm;
-import org.snuvy.FunctionalDbm;
-
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.snuvy.DbRow;
+import org.snuvy.DbTable;
+import org.snuvy.Dbm;
+import org.snuvy.FunctionalDbm;
+import org.yuzz.functor.Fun.F;
+import org.yuzz.web.XmlNoder;
+import org.yuzz.web.XmlNoderCreator;
 import org.yuzz.xml.Node;
 import org.yuzz.xml.NodeStatics;
 import org.yuzz.xml.Xhtml.Table;
-import org.yuzz.functor.Function.Fun1;
 
 import rss.Rss;
 import rss.Rss.RssItem;
-import org.yuzz.web.XmlNoder;
-import org.yuzz.web.XmlNoderCreator;
 
 public class RssBookmarks implements XmlNoder{
 	public static class Creator implements XmlNoderCreator { 
@@ -27,9 +26,9 @@ public class RssBookmarks implements XmlNoder{
 			return new RssBookmarks();
 		}
 		}
-	class RowToItem extends Fun1<RssItem, DbRow> {
+	class RowToItem extends F<DbRow, RssItem> {
 		@Override
-		public RssItem apply(DbRow row) {
+		public RssItem f(DbRow row) {
 		      String name = row.getString(BookmarkManager.NAME);
 		      String url = row.getString(BookmarkManager.URL);
 		      return Rss.item(name, url, name);

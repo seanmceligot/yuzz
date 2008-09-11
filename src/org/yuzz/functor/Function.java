@@ -1,4 +1,5 @@
 /**
+ * @deprecated use Fun instead return R is not the last instead of first
  * a Function is a functor (Object acting as a function) 
  * that returns a value
  */

@@ -26,45 +26,6 @@ public class DbTest extends TestCase {
   private static final String TEXT = "text";
   private static final String SUBJECT = "subject";
   //private static final String ID = "id";
-
-
-  public final void testDbm() throws DatabaseException {
-		Dbm dbm = new Dbm();
-		dbm.open();
-		try {
-		} finally {
-			dbm.close();
-		}
-	}
-
-	
-	public final void testDb() throws DatabaseException {
-		Dbm dbm = new Dbm(".");
-		dbm.open();
-		try {
-			Database db = dbm.open(false, "test");
-			dbm.close("test");
-		} finally {
-			dbm.close();
-		}
-	}
-
-	
-	
-	public final void testSequence() throws DatabaseException, IOException {
-		Dbm dbm = new Dbm();
-		dbm.open();
-		try {
-			TableSequence seq = dbm.getSequence("test");
-			long i = seq.next();
-			long i2 = seq.next();
-			Assert.assertTrue(i2 - i == 1L);
-			dbm.close("test");
-		} finally {
-			dbm.close();
-		}
-	}
-
 	
 	public final void testLongPkTable() throws DatabaseException {
   	Dbm dbm = new Dbm();
@@ -152,7 +113,7 @@ public class DbTest extends TestCase {
     return schema;
   }
   class PrintRow extends Procedure.Proc1<DbRow> {
-    public void call(DbRow row) {
+    public void f(DbRow row) {
       long rowId = row.getRowId();
       String subject = row.getString(SUBJECT);
       String text = row.getString(TEXT);      
@@ -179,7 +140,7 @@ public class DbTest extends TestCase {
         table.saveRow(createRow(table, "zzzz", "zzzz"));
         table.saveRow(createRow(table, "last", "last"));
       }
-      System.out.println("FunctionalDbm.firstToLast");
+      /*System.out.println("FunctionalDbm.firstToLast");
       FunctionalDbm.firstToLast(table, table.byPk(), new PrintRow());
       System.out.println("FunctionalDbm.lastToFirst");
       FunctionalDbm.lastToFirst(table, table.byPk(), new PrintRow());
@@ -195,13 +156,11 @@ public class DbTest extends TestCase {
       System.out.println("FunctionalDbm.findMatching xxyy");
       FunctionalDbm.findMatching(table, bySubject, new DatabaseColumn("xxyy"), new PrintRow());
       //matches all xxyy
-      
+      */
     } finally {
       try {dbm.close();} catch (Throwable th){}
     }
   }
   public static void main(String[] args) throws DatabaseException {
-	  DbTest test = new DbTest();
-	  test.testDb();
   }
   }

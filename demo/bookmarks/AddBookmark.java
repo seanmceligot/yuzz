@@ -15,8 +15,8 @@ import org.yuzz.web.Page;
 import org.yuzz.web.HtmlNoderCreator;
 
 public class AddBookmark implements Page {
-	private String name;
-	private String url;
+	private final String name;
+	private final String url;
 
 	public static class Creator implements HtmlNoderCreator { 
 	public Page create(HttpServletRequest req, HttpServletResponse res) {
@@ -40,7 +40,6 @@ public class AddBookmark implements Page {
 			}});
 	}
 
-	@Override
 	public HtmlTag process(HttpServletRequest req, HttpServletResponse res)
 			throws Throwable {
 		add();

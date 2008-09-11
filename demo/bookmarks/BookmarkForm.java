@@ -10,7 +10,6 @@ import org.yuzz.web.Noder;
 
 public class BookmarkForm implements Noder<Node> {
 
-	@Override
 	public Node node() throws Throwable {
 		Node addNewForm = n("div",
 				n("form", a("action", "add"), a("method","post"), 
