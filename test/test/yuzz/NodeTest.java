@@ -2,6 +2,7 @@ package test.yuzz;
 
 import static org.yuzz.xml.NodeStatics.a;
 import static org.yuzz.xml.NodeStatics.alist;
+import static org.yuzz.xml.NodeStatics.body;
 import static org.yuzz.xml.NodeStatics.div;
 import static org.yuzz.xml.NodeStatics.htmlXhtml1999;
 import static org.yuzz.xml.NodeStatics.n;
@@ -9,7 +10,7 @@ import static org.yuzz.xml.NodeStatics.t;
 import static org.yuzz.xml.NodeStatics.table;
 import static org.yuzz.xml.NodeStatics.td;
 import static org.yuzz.xml.NodeStatics.tr;
-import static org.yuzz.xml.NodeStatics.*;
+import static org.yuzz.xml.NodeStatics.xhtml11Strict;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -24,8 +25,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.yuzz.functor.Fun;
 import org.yuzz.functor.Functions;
-import org.yuzz.functor.Fun.F;
-import org.yuzz.functor.Fun.F2;
 import org.yuzz.tools.Render;
 import org.yuzz.xml.AllowedTags;
 import org.yuzz.xml.Node;
@@ -35,6 +34,9 @@ import org.yuzz.xml.Xhtml.DocType;
 import org.yuzz.xml.Xhtml.Head;
 import org.yuzz.xml.Xhtml.HtmlTag;
 import org.yuzz.xml.Xhtml.Table;
+
+import fj.F;
+import fj.F2;
 
 public class NodeTest {
 	@Test
@@ -86,7 +88,7 @@ public class NodeTest {
     	      n("font", a("size", "+1"), 
     	       n("strong", t("Method")))) 
     	       ));
-    F2<Table, String, Table> fun = new Fun.F2<Table, String, Table>() {
+    F2<Table, String, Table> fun = new F2<Table, String, Table>() {
       public Table f(Table table, String str) {
         table.add(tr(td(t(str))));
         return table;

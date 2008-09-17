@@ -10,7 +10,6 @@ import org.snuvy.DbRow;
 import org.snuvy.DbTable;
 import org.snuvy.Dbm;
 import org.snuvy.FunctionalDbm;
-import org.yuzz.functor.Fun.F;
 import org.yuzz.web.XmlNoder;
 import org.yuzz.web.XmlNoderCreator;
 import org.yuzz.xml.Node;
@@ -19,6 +18,7 @@ import org.yuzz.xml.Xhtml.Table;
 
 import rss.Rss;
 import rss.Rss.RssItem;
+import fj.F;
 
 public class RssBookmarks implements XmlNoder{
 	public static class Creator implements XmlNoderCreator { 
@@ -26,8 +26,7 @@ public class RssBookmarks implements XmlNoder{
 			return new RssBookmarks();
 		}
 		}
-	class RowToItem extends F<DbRow, RssItem> {
-		@Override
+	class RowToItem implements F<DbRow, RssItem> {
 		public RssItem f(DbRow row) {
 		      String name = row.getString(BookmarkManager.NAME);
 		      String url = row.getString(BookmarkManager.URL);

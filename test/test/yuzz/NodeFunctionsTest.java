@@ -12,13 +12,13 @@ import java.util.List;
 import org.junit.Test;
 import org.yuzz.functor.Functions;
 import org.yuzz.functor.Operators;
-import org.yuzz.functor.Fun.F;
-import org.yuzz.functor.Fun.F2;
 import org.yuzz.functor.Tuples.Tuple2;
 import org.yuzz.tools.Render;
 import org.yuzz.xml.Node;
 import org.yuzz.xml.NodeOperators;
 import org.yuzz.xml.Xhtml.Table;
+
+import fj.F2;
 
 
 public class NodeFunctionsTest {

@@ -7,12 +7,12 @@ import static org.yuzz.xml.NodeStatics.td;
 import static org.yuzz.xml.NodeStatics.tr;
 
 import org.snuvy.DbRow;
-import org.yuzz.functor.Fun.F;
 import org.yuzz.xml.Xhtml.Tr;
 
-public class BookmarkRowToTr extends F<DbRow, Tr> {
-	public class RowToTr extends F<DbRow, Tr> {
-		@Override
+import fj.F;
+
+public class BookmarkRowToTr implements F<DbRow, Tr> {
+	public class RowToTr implements F<DbRow, Tr> {
 		public Tr f(DbRow row) {
 			 long rowId = row.getRowId();
 		      String name = row.getString(BookmarkManager.NAME);
@@ -24,7 +24,6 @@ public class BookmarkRowToTr extends F<DbRow, Tr> {
 		}
 	}
 
-	@Override
 	public Tr f(DbRow row) {
 		 long rowId = row.getRowId();
 	      String name = row.getString(BookmarkManager.NAME);

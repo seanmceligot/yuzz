@@ -1,24 +1,20 @@
 package test.snuvy;
 
+import junit.framework.Assert;
+import junit.framework.TestCase;
+
 import org.snuvy.ColType;
 import org.snuvy.DatabaseColumn;
 import org.snuvy.DbIndex;
 import org.snuvy.DbRow;
 import org.snuvy.DbTable;
 import org.snuvy.Dbm;
-import org.snuvy.FunctionalDbm;
 import org.snuvy.Schema;
 import org.snuvy.TableIterator;
-import org.snuvy.TableSequence;
 
-import java.io.IOException;
-
-import junit.framework.Assert;
-import junit.framework.TestCase;
-import org.yuzz.functor.Procedure;
-
-import com.sleepycat.je.Database;
 import com.sleepycat.je.DatabaseException;
+
+import fj.Effect;
 
 public class DbTest extends TestCase {
 	private static final String HELLO_WORLD = "Hello World!";
@@ -112,8 +108,8 @@ public class DbTest extends TestCase {
     schema.addColumn(TEXT, ColType.STRING);
     return schema;
   }
-  class PrintRow extends Procedure.Proc1<DbRow> {
-    public void f(DbRow row) {
+  class PrintRow implements Effect<DbRow> {
+    public void e(DbRow row) {
       long rowId = row.getRowId();
       String subject = row.getString(SUBJECT);
       String text = row.getString(TEXT);      
