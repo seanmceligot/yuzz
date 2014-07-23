@@ -1,6 +1,9 @@
 package org.snuvy;
 
 import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.function.Consumer;
 
 
 public class Schema implements Iterable<String>{
@@ -71,4 +74,16 @@ public class Schema implements Iterable<String>{
   public DbIndex getIndex(String name) {
     return _indexes.get(name);
   }
+@Override
+public void forEach(Consumer<? super String> action) {
+	Iterator<String> indexes = indexes();
+	while(indexes.hasNext()) {
+		action.accept(indexes.next());
+	}
+	
+}
+@Override
+public Spliterator<String> spliterator() {
+	return Spliterators.spliteratorUnknownSize(indexes(), 0);
+}
 }

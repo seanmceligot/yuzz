@@ -1,0 +1,4 @@
+*.ser
+*.lck
+*.jdb
+tmp.html

@@ -30,7 +30,7 @@ public class TableSequence {
 
   public void close() throws DatabaseException {
     _seq.close();
-    _dbm.close();
+    //_dbm.close();
   }
 
   public String getName() {

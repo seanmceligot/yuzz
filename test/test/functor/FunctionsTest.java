@@ -1,5 +1,6 @@
 package test.functor;
 
+import static org.yuzz.functor.Functions.map;
 import static org.yuzz.functor.Functions.sequence;
 import static org.yuzz.functor.Functions.zip;
 
@@ -11,12 +12,10 @@ import junit.framework.Assert;
 import org.junit.Test;
 import org.yuzz.functor.Functions;
 import org.yuzz.functor.Operators;
+import org.yuzz.functor.Fun.F;
 import org.yuzz.functor.Operators.Concat;
 import org.yuzz.functor.Operators.Join;
 import org.yuzz.functor.Tuples.Tuple2;
-
-import fj.F;
-import fj.Function;
 
 public class FunctionsTest {
 
@@ -32,7 +31,7 @@ public class FunctionsTest {
 		Assert.assertEquals("[(a,1), (b,2), (c,3)]", c.toString());
 	}
 	public static F<String,String> concat(String prefix) {
-		return Function.curry(new Concat(), prefix);
+		return new Concat().bind(prefix);
 	}
 	public static String concat(String...ss) {
 		return Functions.foldl(new Concat(), "", Arrays.asList(ss));
@@ -68,8 +67,8 @@ public class FunctionsTest {
 	}	
 	@Test
 	public void testSandwich() {
-		//List<String> list = map(new Operators.SurroundWith("<td>","</td") , stringList);
-		//Assert.assertEquals("[<td>one</td, <td>two</td, <td>three</td]", list.toString());
+		List<String> list = map(new Operators.SurroundWith("<td>","</td") , stringList);
+		Assert.assertEquals("[<td>one</td, <td>two</td, <td>three</td]", list.toString());
 	}
 	@Test
 	public void testSequence() {
@@ -87,6 +86,7 @@ public class FunctionsTest {
 		Integer integer = Functions.head(zeroNine);
     Assert.assertEquals(new Integer(0), integer);
 	}
+
 	@Test
 	public void testMap() {
 		List<Integer> tens = Functions.map(new F<Integer,Integer>() {

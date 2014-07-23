@@ -15,6 +15,7 @@ import java.sql.Ref;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.RowId;
+import java.sql.SQLType;
 import java.sql.SQLXML;
 //import java.sql.RowId;
 import java.sql.SQLException;
@@ -28,7 +29,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DebugPreparedStatement implements PreparedStatement {
-    private static final Logger _classLog = Logger.getLogger(SqlHelper.class.getName());	private PreparedStatement _target = null;
+    private static final Logger _classLog = Logger.getLogger(SqlHelper.class.getName());	
+    private PreparedStatement _target = null;
 	private String _sql = null;
 
 	public DebugPreparedStatement(PreparedStatement target, String sql) {
@@ -1215,85 +1217,154 @@ public class DebugPreparedStatement implements PreparedStatement {
 	/* END jdk1.4 */
 	public void setAsciiStream(int parameterIndex, InputStream x)
 			throws SQLException {
-		// TODO Auto-generated method stub
+		_target.setAsciiStream(parameterIndex, x);
 		
 	}
 	public void setAsciiStream(int parameterIndex, InputStream x, long length)
 			throws SQLException {
-		// TODO Auto-generated method stub
+		_target.setAsciiStream(parameterIndex, x, length);
 		
 	}
 	public void setBinaryStream(int parameterIndex, InputStream x)
 			throws SQLException {
-		// TODO Auto-generated method stub
+		_target.setBinaryStream(parameterIndex, x);
 		
 	}
 	public void setBinaryStream(int parameterIndex, InputStream x, long length)
 			throws SQLException {
-		// TODO Auto-generated method stub
+		_target.setBinaryStream(parameterIndex, x, length);
 		
 	}
 	public void setBlob(int parameterIndex, InputStream inputStream)
 			throws SQLException {
-		// TODO Auto-generated method stub
+		_target.setBlob(parameterIndex, inputStream);
 		
 	}
 	public void setBlob(int parameterIndex, InputStream inputStream, long length)
 			throws SQLException {
-		// TODO Auto-generated method stub
+		_target.setBlob(parameterIndex, inputStream, length);
 		
 	}
 	public void setCharacterStream(int parameterIndex, Reader reader)
 			throws SQLException {
-		// TODO Auto-generated method stub
+		_target.setCharacterStream(parameterIndex, reader);
 		
 	}
 	public void setCharacterStream(int parameterIndex, Reader reader,
 			long length) throws SQLException {
-		// TODO Auto-generated method stub
+		_target.setCharacterStream(parameterIndex, reader, length);
 		
 	}
 	public void setClob(int parameterIndex, Reader reader) throws SQLException {
-		// TODO Auto-generated method stub
+		_target.setClob(parameterIndex, reader);
 		
 	}
 	public void setClob(int parameterIndex, Reader reader, long length)
 			throws SQLException {
-		// TODO Auto-generated method stub
+		_target.setClob(parameterIndex, reader, length);
 		
 	}
 	public void setNCharacterStream(int parameterIndex, Reader value)
 			throws SQLException {
-		// TODO Auto-generated method stub
+		_target.setNCharacterStream(parameterIndex, value);
 		
 	}
 	public void setNCharacterStream(int parameterIndex, Reader value,
 			long length) throws SQLException {
+		_target.setNCharacterStream(parameterIndex, value);
 	}
   public void setNClob(int arg0, NClob arg1) throws SQLException {
+	  _target.setNClob(arg0, arg1);
   }
   public void setNClob(int arg0, Reader arg1) throws SQLException {
+	  _target.setNClob(arg0, arg1);
   }
   public void setNClob(int arg0, Reader arg1, long arg2) throws SQLException {
+	  _target.setNClob(arg0, arg1, arg2);
   }
   public void setNString(int arg0, String arg1) throws SQLException {
+	  _target.setNString(arg0, arg1);
   }
   public void setRowId(int arg0, RowId arg1) throws SQLException {
+  	_target.setRowId(arg0, arg1);
   }
   public void setSQLXML(int arg0, SQLXML arg1) throws SQLException {
+	  _target.setSQLXML(arg0, arg1);
   }
   public boolean isClosed() throws SQLException {
-    return false;
+    return _target.isClosed();
   }
   public boolean isPoolable() throws SQLException {
-    return false;
+    return _target.isPoolable();
   }
   public void setPoolable(boolean arg0) throws SQLException {
+	  _target.setPoolable(arg0);
   }
   public boolean isWrapperFor(Class<?> arg0) throws SQLException {
-    return false;
+    return _target.isWrapperFor(arg0);
   }
   public <T> T unwrap(Class<T> arg0) throws SQLException {
-    return null;
+    return _target.unwrap(arg0);
   }
+@Override
+public void closeOnCompletion() throws SQLException {
+	_target.closeOnCompletion();
+	
+}
+@Override
+public boolean isCloseOnCompletion() throws SQLException {
+	return _target.isCloseOnCompletion();
+}
+@Override
+public long getLargeUpdateCount() throws SQLException {
+	return _target.getLargeUpdateCount();
+}
+@Override
+public void setLargeMaxRows(long max) throws SQLException {
+	_target.setLargeMaxRows(max);
+	
+}
+@Override
+public long getLargeMaxRows() throws SQLException {
+	return _target.getLargeMaxRows();
+}
+@Override
+public long[] executeLargeBatch() throws SQLException {
+	return _target.executeLargeBatch();
+}
+@Override
+public long executeLargeUpdate(String sql) throws SQLException {
+	return _target.executeLargeUpdate(sql);
+}
+@Override
+public long executeLargeUpdate(String sql, int autoGeneratedKeys)
+		throws SQLException {
+	return _target.executeLargeUpdate(sql, autoGeneratedKeys);
+}
+@Override
+public long executeLargeUpdate(String sql, int[] columnIndexes)
+		throws SQLException {
+	return _target.executeLargeUpdate(sql, columnIndexes);
+}
+@Override
+public long executeLargeUpdate(String sql, String[] columnNames)
+		throws SQLException {
+	return _target.executeLargeUpdate(sql, columnNames);
+}
+@Override
+public void setObject(int parameterIndex, Object x, SQLType targetSqlType,
+		int scaleOrLength) throws SQLException {
+	_target.setObject(parameterIndex, x, targetSqlType, scaleOrLength);
+	
+}
+@Override
+public void setObject(int parameterIndex, Object x, SQLType targetSqlType)
+		throws SQLException {
+	_target.setObject(parameterIndex, x, targetSqlType);
+	
+}
+@Override
+public long executeLargeUpdate() throws SQLException {
+	return _target.executeLargeUpdate();
+}
 }
